@@ -1,0 +1,7 @@
+export const
+	BREAD_BOTTOM = "BREAD_BOTTOM",
+	BREAD_TOP = "BREAD_TOP",
+	MEAT = "MEAT",
+	CHEESE = "CHEESE",
+	SALAD = "SALAD",
+	BACON = "BACON";

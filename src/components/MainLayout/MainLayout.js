@@ -4,7 +4,8 @@ import Auxiliary from '../../hoc/Auxiliary';
 
 const mainLayout = (props) => (
 	<Auxiliary>
-		<main>
+		<div>toolbar</div>
+		<main className="main-layout">
 			{props.children}
 		</main>
 	</Auxiliary>

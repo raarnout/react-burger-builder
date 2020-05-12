@@ -5,3 +5,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@import "./components/MainLayout/main-layout";
+@import "./components/Burger/BurgerIngredient/burger-ingredient";
+@import "./components/Burger/burger";
+

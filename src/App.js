@@ -1,10 +1,19 @@
 import React from 'react';
-import MainLayout from './components/layout/main-layout'
+
+/**
+ * Import containers
+ */
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+
+/**
+ * Import components
+ */
+import MainLayout from './components/MainLayout/MainLayout';
 
 function App() {
     return (
         <MainLayout>
-            <p>hallo react</p>
+            <BurgerBuilder/>
         </MainLayout>
     )
 }
