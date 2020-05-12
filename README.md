@@ -66,3 +66,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### 'src\components' and 'src\containers'
+
+src\containers:
+	- Are stateful components
+	- Components create with the class keyword and use 'state'
+	- Functional components using the 'useState' hook.
+
+src\components
+	- are stateless (dumb, presentational) componentes
+	- Class components that not using the 'state'
+	- Functional components that not using hooks.
