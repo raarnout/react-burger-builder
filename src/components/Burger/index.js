@@ -18,7 +18,7 @@ const burger = props => {
 		}, []);
 
 	if(ingredients.length === 0) {
-		ingredients = <p>Add ingredients.</p>
+		ingredients = <p>Please start adding ingredients!</p>
 	}
 
 	return (
