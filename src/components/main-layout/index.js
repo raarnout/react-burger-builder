@@ -11,14 +11,14 @@ function MainLayout(props) {
 		setSideDrawer(!showSideDrawer);
 	}
 
-	const toggleMenuHandler = () => {
+	const sideDrawerToggleHandler = () => {
 		setSideDrawer(!showSideDrawer);
 	}
 
 	return (
 		<Auxiliary>
 			<Toolbar 
-				toggleMenu={toggleMenuHandler}/>
+				drawerToggleClicked={sideDrawerToggleHandler}/>
 			<SideDrawer 
 				open={showSideDrawer} 
 				closed={sideDrawerClosedHandler}/>

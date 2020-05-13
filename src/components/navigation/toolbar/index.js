@@ -6,7 +6,7 @@ import HamburgerButton from 'components/UI/hamburger-button';
 
 const toolbar = props => (
 	<header className="toolbar">
-		<HamburgerButton clicked={props.toggleMenu}/>
+		<HamburgerButton clicked={props.drawerToggleClicked}/>
 		<div className="toolbar__logo">
 			<Logo />
 		</div>
