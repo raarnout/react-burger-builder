@@ -5,7 +5,7 @@ import Burger from 'components/burger';
 import Controls from 'components/burger/controls';
 import Modal from 'components/UI/modal';
 
-import OrderSummary from 'components/burger/order-summary/';
+import OrderSummary from 'components/order-summary/';
 
 import { DEFAULT_PRICE, INGREDIENT_PRICE } from '02-const/burger';
 
@@ -93,13 +93,21 @@ class BurgerBuilder extends Component {
 		this.setState({ purchasing });
 	}
 
+	purchasingConfirmed = () => {
+		alert('order confirmed');
+	}
+
 	render() {
 		return (
 			<Auxiliary>
 				<Modal 
 					show={this.state.purchasing}
 					modalClosed={() => this.purchasingHandler(false)}>
-					<OrderSummary ingredients={this.state.ingredients} />
+					<OrderSummary 
+						ingredients={this.state.ingredients}
+						price={this.state.totalPrice}
+						cancel={() => this.purchasingHandler(false)}
+						confirm={() => this.purchasingConfirmed()}/>
 				</Modal>
 				<Burger ingredients={this.state.ingredients} />
 				<Controls
