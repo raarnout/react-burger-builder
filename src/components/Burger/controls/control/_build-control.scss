@@ -31,7 +31,7 @@
         background-color: #D39952;
         color: white;
 
-        &:hover,
+        &:hover:not(:disabled),
         &:active {
             background-color: #DAA972;
             color: white;

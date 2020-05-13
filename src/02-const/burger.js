@@ -4,4 +4,11 @@ export const
 	MEAT = "MEAT",
 	CHEESE = "CHEESE",
 	SALAD = "SALAD",
-	BACON = "BACON";
+	BACON = "BACON",
+	
+	INGREDIENT_PRICE = {
+		SALAD: 0.4,
+		CHEESE: 0.5,
+		MEAT: 1.3,
+		BACON: 0.7
+	}
