@@ -8,7 +8,7 @@ import {
 	CHEESE,
 	SALAD,
 	BACON
-} from '../../../02-const/burger'
+} from '02-const/burger'
 
 const getIngredient = classname => <div className={classname}></div>;
 

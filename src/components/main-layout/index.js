@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Auxiliary from '../../hoc/Auxiliary';
+import Auxiliary from 'hoc/auxiliary';
 
 const mainLayout = (props) => (
 	<Auxiliary>

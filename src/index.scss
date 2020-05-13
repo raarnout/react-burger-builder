@@ -6,7 +6,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@import "./components/MainLayout/main-layout";
-@import "./components/Burger/BurgerIngredient/burger-ingredient";
-@import "./components/Burger/burger";
+@import "components/main-layout/main-layout";
+
+/*
+ * Burger
+ */
+@import "components/burger/burger";
+@import "components/burger/ingredient/burger-ingredient";
+@import "components/burger/controls/build-controls";
+@import "components/burger/controls/control/build-control";
 
