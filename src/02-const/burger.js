@@ -5,6 +5,8 @@ export const
 	CHEESE = "CHEESE",
 	SALAD = "SALAD",
 	BACON = "BACON",
+
+	DEFAULT_PRICE = 4.00,
 	
 	INGREDIENT_PRICE = {
 		SALAD: 0.4,

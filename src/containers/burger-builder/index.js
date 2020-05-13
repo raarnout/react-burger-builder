@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import Auxiliary from 'hoc/auxiliary';
 import Burger from 'components/burger';
 import Controls from 'components/burger/controls';
+import Modal from 'components/UI/modal';
 
-import { INGREDIENT_PRICE } from '02-const/burger';
+import OrderSummary from 'components/burger/order-summary/';
+
+import { DEFAULT_PRICE, INGREDIENT_PRICE } from '02-const/burger';
 
 const calculateIngredientCount = (oldCount, addition) => {
 	let updatedCount = oldCount + addition;
@@ -24,10 +27,12 @@ const updateIngredientCount = (oldIngredients, type, newCount) => {
 
 const updateTotalPrice = (oldPrice, type, add) => {
 	const ingredientPrice = INGREDIENT_PRICE[type];
-	if (add) {
-		return oldPrice + ingredientPrice;
-	} 
-	return oldPrice - ingredientPrice;
+	let newPrice = oldPrice + ingredientPrice;
+	if (!add) {
+		newPrice = oldPrice - ingredientPrice;
+	};
+
+	return newPrice;
 }
 
 /*
@@ -49,12 +54,13 @@ class BurgerBuilder extends Component {
 	 */
 	state = {
 		ingredients: {
-			SALAD: 0,
-			BACON: 0,
-			CHEESE: 0,
-			MEAT: 0
+			SALAD: 1,
+			BACON: 1,
+			CHEESE: 1,
+			MEAT: 1
 		},
-		totalPrice: 4
+		totalPrice: DEFAULT_PRICE,
+		purchasing: false
 	}
 
 	addIngredientHandler = type => {
@@ -83,17 +89,26 @@ class BurgerBuilder extends Component {
 		return totalIngredients > 0;
 	}
 
+	purchasingHandler = purchasing => {
+		this.setState({ purchasing });
+	}
+
 	render() {
 		return (
 			<Auxiliary>
+				<Modal 
+					show={this.state.purchasing}
+					modalClosed={() => this.purchasingHandler(false)}>
+					<OrderSummary ingredients={this.state.ingredients} />
+				</Modal>
 				<Burger ingredients={this.state.ingredients} />
 				<Controls
 					ingredientAdded={this.addIngredientHandler}
 					ingredientRemoved={this.removeIngredientHandler}
 					disableControls={this.calculateDisableControls()}
 					price={this.state.totalPrice}
-					purchasable={this.calculatePurchase()}
-				/>
+					purchasable={this.calculatePurchase}
+					ordered={() => this.purchasingHandler(true)}/>
 			</Auxiliary>
 		);
 	}

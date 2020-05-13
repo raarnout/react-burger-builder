@@ -9,6 +9,12 @@ body {
 @import "components/main-layout/main-layout";
 
 /*
+ * UI
+ */
+ @import "components/UI/modal/modal";
+ @import "components/UI/backdrop/backdrop";
+
+/*
  * Burger
  */
 @import "components/burger/burger";
