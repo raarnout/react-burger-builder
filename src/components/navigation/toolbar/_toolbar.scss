@@ -15,4 +15,14 @@
 	nav {
 		height: 100%;
 	}
+
+	&__logo {
+		height: 80%;
+	}
+
+	@media screen and (max-width: 499px) {
+		.desktop-only {
+			display:none;
+		}
+	}
 }
