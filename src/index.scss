@@ -16,6 +16,12 @@ body {
  @import "components/UI/backdrop/backdrop";
 
 /*
+ * Navigation
+ */
+@import "components/logo/logo";
+@import "components/navigation/toolbar/toolbar";
+
+/*
  * Burger
  */
 @import "components/burger/burger";

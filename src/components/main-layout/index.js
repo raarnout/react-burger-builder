@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Auxiliary from 'hoc/auxiliary';
+import Toolbar from 'components/navigation/toolbar';
 
-const mainLayout = (props) => (
+const mainLayout = props => (
 	<Auxiliary>
-		<div>toolbar</div>
+		<Toolbar/>
 		<main className="main-layout">
 			{props.children}
 		</main>
