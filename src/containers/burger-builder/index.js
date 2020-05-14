@@ -6,7 +6,9 @@ import Controls from 'components/burger/controls';
 import Modal from 'components/UI/modal';
 
 import OrderSummary from 'components/order-summary/';
+import Spinner from 'components/UI/spinner';
 
+import ajax from '01-helper/utilities/ajax/orders';
 import { DEFAULT_PRICE, INGREDIENT_PRICE } from '02-const/burger';
 
 const calculateIngredientCount = (oldCount, addition) => {
@@ -60,7 +62,8 @@ class BurgerBuilder extends Component {
 			MEAT: 1
 		},
 		totalPrice: DEFAULT_PRICE,
-		purchasing: false
+		purchasing: false,
+		loading: false
 	}
 
 	addIngredientHandler = type => {
@@ -94,20 +97,49 @@ class BurgerBuilder extends Component {
 	}
 
 	purchasingConfirmed = () => {
-		alert('order confirmed');
+		this.setState({ loading: true });
+		const order = {
+			ingredients: this.state.ingredients,
+			price: this.state.totalPrice,
+			customer: {
+				name: 'Ronald',
+				address: {
+					street: 'Teststraat 1',
+					zipCode: '1234 ab',
+					country: 'Nederland'
+				},
+				email: 'test@test.com'
+			},
+			deliveryMethod: 'fastest'
+		}
+		ajax.post('/orders.json', order)
+			.then(response => {
+				console.log(response);
+				this.setState({ loading: false });
+			})
+			.catch(error => {
+				console.log(error);
+				this.setState({ loading: false });
+			});
 	}
 
 	render() {
+		let orderSummary = <OrderSummary
+			ingredients={this.state.ingredients}
+			price={this.state.totalPrice}
+			cancel={() => this.purchasingHandler(false)}
+			confirm={() => this.purchasingConfirmed()} />;
+
+		if (this.state.loading) {
+			orderSummary = <Spinner />
+		}
+
 		return (
 			<Auxiliary>
-				<Modal 
+				<Modal
 					show={this.state.purchasing}
 					modalClosed={() => this.purchasingHandler(false)}>
-					<OrderSummary 
-						ingredients={this.state.ingredients}
-						price={this.state.totalPrice}
-						cancel={() => this.purchasingHandler(false)}
-						confirm={() => this.purchasingConfirmed()}/>
+					{orderSummary}
 				</Modal>
 				<Burger ingredients={this.state.ingredients} />
 				<Controls
@@ -116,7 +148,7 @@ class BurgerBuilder extends Component {
 					disableControls={this.calculateDisableControls()}
 					price={this.state.totalPrice}
 					purchasable={this.calculatePurchase}
-					ordered={() => this.purchasingHandler(true)}/>
+					ordered={() => this.purchasingHandler(true)} />
 			</Auxiliary>
 		);
 	}
