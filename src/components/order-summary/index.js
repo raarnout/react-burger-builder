@@ -3,7 +3,7 @@ import React from 'react';
 import Auxiliary from 'hoc/auxiliary';
 import Button from 'components/UI/button';
 
-const orderSummary = props => {
+const OrderSummary = props => {
 	const ingredientSummary = Object.keys(props.ingredients)
 		.map(igKey => {
 			return (
@@ -12,7 +12,7 @@ const orderSummary = props => {
 				</li>
 			)
 		})
-
+	console.log('render ordersummary');
 	return (
 		<Auxiliary>
 			<h3>Your Order</h3>
@@ -27,4 +27,4 @@ const orderSummary = props => {
 	)
 }
 
-export default orderSummary;
+export default OrderSummary;

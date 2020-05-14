@@ -8,7 +8,7 @@ import BurgerBuilder from 'containers/burger-builder';
 /**
  * Import components
  */
-import MainLayout from './components/main-layout';
+import MainLayout from 'hoc/main-layout';
 
 function App() {
     return (
