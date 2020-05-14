@@ -55,15 +55,30 @@ class BurgerBuilder extends Component {
 	 * constructor function.
 	 */
 	state = {
-		ingredients: {
-			SALAD: 1,
-			BACON: 1,
-			CHEESE: 1,
-			MEAT: 1
-		},
+		ingredients: [],
 		totalPrice: DEFAULT_PRICE,
 		purchasing: false,
-		loading: false
+		loading: false,
+		error: false
+	}
+
+	componentDidMount() {
+		axios.get('https://react-burger-builder-40ebc.firebaseio.com/ingredients.json')
+			.then(response => {
+				const data = response.data;
+				const ingredients = Object.keys(data).map(igKey => {
+					return {
+						[igKey.toUpperCase()]: data[igKey]
+					};
+				}).reduce((ingredients, pair) => {
+					return { ...ingredients, ...pair }
+				}, {});
+
+				this.setState({ ingredients: { ...ingredients } });
+			})
+			.catch(error => {
+				this.setState({ error: true });
+			});
 	}
 
 	addIngredientHandler = type => {
@@ -124,14 +139,36 @@ class BurgerBuilder extends Component {
 	}
 
 	render() {
-		let orderSummary = <OrderSummary
-			ingredients={this.state.ingredients}
-			price={this.state.totalPrice}
-			cancel={() => this.purchasingHandler(false)}
-			confirm={() => this.purchasingConfirmed()} />;
+		let orderSummary = null;
+		let burger = <Spinner />;
+		if (this.state.ingredients) {
+			burger = (
+				<Auxiliary>
+					<Burger ingredients={this.state.ingredients} />
+					<Controls
+						ingredientAdded={this.addIngredientHandler}
+						ingredientRemoved={this.removeIngredientHandler}
+						disableControls={this.calculateDisableControls()}
+						price={this.state.totalPrice}
+						purchasable={this.calculatePurchase}
+						ordered={() => this.purchasingHandler(true)} />
+				</Auxiliary>
+			);
+
+			orderSummary = <OrderSummary
+				ingredients={this.state.ingredients}
+				price={this.state.totalPrice}
+				cancel={() => this.purchasingHandler(false)}
+				confirm={() => this.purchasingConfirmed()} />;
+		}
+
 
 		if (this.state.loading) {
 			orderSummary = <Spinner />
+		}
+
+		if (this.state.error) {
+			burger = <p style={{ textAlign: "center", padding: "100px" }}>Error loading ingredients from database</p>
 		}
 
 		return (
@@ -141,14 +178,7 @@ class BurgerBuilder extends Component {
 					modalClosed={() => this.purchasingHandler(false)}>
 					{orderSummary}
 				</Modal>
-				<Burger ingredients={this.state.ingredients} />
-				<Controls
-					ingredientAdded={this.addIngredientHandler}
-					ingredientRemoved={this.removeIngredientHandler}
-					disableControls={this.calculateDisableControls()}
-					price={this.state.totalPrice}
-					purchasable={this.calculatePurchase}
-					ordered={() => this.purchasingHandler(true)} />
+				{burger}
 			</Auxiliary>
 		);
 	}

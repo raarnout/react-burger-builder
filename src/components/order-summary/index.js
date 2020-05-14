@@ -12,7 +12,7 @@ const OrderSummary = props => {
 				</li>
 			)
 		})
-	console.log('render ordersummary');
+
 	return (
 		<Auxiliary>
 			<h3>Your Order</h3>

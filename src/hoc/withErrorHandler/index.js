@@ -5,27 +5,41 @@ import Auxiliary from 'hoc/auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => {
 	return class extends Component {
-		state = {
-			error: null
-		}
-
 		/*
-		 * In componentDidMount() we added some interceptors which is basically 
+		 * In the constructor we added some interceptors which is basically 
 		 * some middleware that intercepts each request done via the give 
 		 * axios instance.
 		 * Each time we send a request, the error will be cleared.
 		 * Each time we get a response, we will check if there is an error.
 		 * If so, we show it in a modal.
 		 */
-		componentDidMount() {
-			axios.interceptors.request.use(req => {
+
+		/*
+		 * Because componentDidMount() will only run after rendering, we need to
+		 * setup the interceptors inside the constructor. Else we can't handle
+		 * errors from inside the componentDidMount() hooks inside children of 
+		 * this high order component.
+		 */
+		constructor(props) {
+			super(props);
+		
+			this.requestInterceptor = axios.interceptors.request.use(req => {
 				this.setState({ error: null });
 				return req;
 			});
 
-			axios.interceptors.response.use(res => res, error => {
+			this.responseInterceptor =  axios.interceptors.response.use(res => res, error => {
 				this.setState({ error });
 			});
+		}
+
+		componentWillUnmount() {
+			axios.interceptors.request.eject(this.requestInterceptor);
+			axios.interceptors.request.eject(this.responseInterceptor);
+		}
+
+		state = {
+			error: null
 		}
 
 		errorConfirmedHandler = () => {
