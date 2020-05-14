@@ -4,11 +4,11 @@ import Auxiliary from 'hoc/auxiliary';
 import Burger from 'components/burger';
 import Controls from 'components/burger/controls';
 import Modal from 'components/UI/modal';
-
 import OrderSummary from 'components/order-summary/';
 import Spinner from 'components/UI/spinner';
 
-import ajax from '01-helper/utilities/ajax/orders';
+import withErrorHandler from 'hoc/withErrorHandler';
+import axios from '01-helper/utilities/ajax/orders';
 import { DEFAULT_PRICE, INGREDIENT_PRICE } from '02-const/burger';
 
 const calculateIngredientCount = (oldCount, addition) => {
@@ -112,14 +112,14 @@ class BurgerBuilder extends Component {
 			},
 			deliveryMethod: 'fastest'
 		}
-		ajax.post('/orders.json', order)
+		axios.post('/orders.json', order)
 			.then(response => {
 				console.log(response);
-				this.setState({ loading: false });
+				this.setState({ loading: false, purchasing: false });
 			})
 			.catch(error => {
 				console.log(error);
-				this.setState({ loading: false });
+				this.setState({ loading: false, purchasing: false });
 			});
 	}
 
@@ -154,4 +154,4 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
