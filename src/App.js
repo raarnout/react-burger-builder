@@ -12,8 +12,8 @@ import MainLayout from 'hoc/main-layout';
 
 function App() {
     return (
-        <MainLayout>
-            <BurgerBuilder/>
+        <MainLayout >
+            <BurgerBuilder />
         </MainLayout>
     )
 }
